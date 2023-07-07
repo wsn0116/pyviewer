@@ -1,0 +1,53 @@
+{% extends "viewer/layouts/layout.html" %}
+{% block title_block %}
+Viewer for {{ date }}
+{% endblock %}
+{% block body_block %}
+    {% load static %}
+    <div>
+        {% if is_exists_log %}
+            <div id='log' style='background-color: #eeeeee; font-size: 1rem; margin: 10px; padding: 1rem 10rem 2rem 1rem; position: fixed;'>
+            {% for log in logs %}
+                {{ log }}<br>
+            {% endfor %}
+            </div>
+            <button id='btn_hide' class='btn btn-white' style='position: fixed;' onClick='javascript:hide_log();'>×</button>
+            {% if is_available_remove_log %}
+                <form action="{% url 'remove_log' %}" method='post' style='float: right;'>
+                    {% csrf_token %}
+                    <input type='hidden' name='date' value='{{ date }}'>
+                    <input type='submit' value='delete' class='btn btn-primary' style='margin: 20px;'>
+                </form>
+            {% endif %}
+            <div id='filler'>
+                <br><br><br><br><br><br><br><br><br>
+            </div>
+            <script>
+                window.addEventListener('load', function() {
+                    setInterval('location.reload()', 300000);
+                });
+                function hide_log() {
+                    document.getElementById('log').style.display = 'none';
+                    document.getElementById('btn_hide').style.display = 'none';
+                    document.getElementById('filler').style.display = 'none';
+                }
+            </script>
+        {% else %}
+            <div style='background-color: white; margin: 0px; padding: 15px 0 15px 0; position: fixed; width: 100%;'>
+                <h2>{{ date }}</h2>
+            </div>
+            <br><br><br>
+        {% endif %}
+        <div>
+            {% for row in rows %}
+                <form action="{% url 'move_to_trash' %}" method='post' style='margin: 15px;'>
+                    <img src="{% static 'images/'|add:row.date_file %}"><br>{{ row.file }}
+                    {% csrf_token %}
+                    <input type='hidden' name='date' value='{{ row.date }}'>
+                    <input type='hidden' name='file' value='{{ row.file }}'>
+                    <input type='submit' value='delete' class='btn btn-danger' style='margin: 10px;'>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

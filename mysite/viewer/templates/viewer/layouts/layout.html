@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+    <head>
+        <title>
+            {% block title_block %}
+            {% endblock %}
+        </title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel='icon' href='http://192.168.1.100:7860/favicon.ico'>
+        <link rel='stylesheet' href="{% static 'viewer/css/bootstrap.min.css' %}">
+    </head>
+    <body>
+        {% block body_block %}
+        {% endblock %}
+        <script src="{% static 'viewer/js/bootstrap.min.js' %}"></script>
+    </body>
+</html>

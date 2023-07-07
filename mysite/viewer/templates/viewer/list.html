@@ -1,0 +1,19 @@
+{% extends "viewer/layouts/layout.html" %}
+{% block title_block %}
+    Generate Files
+{% endblock %}
+{% block body_block %}
+    <div style='font-size: 1.5rem; line-height: 3rem; margin: 20px;'>
+        <div>
+            {% for row in rows %}
+                <a href="{% url 'detail' %}?date={{ row.file }}">{{ row.file }} {{ row.name }}</a><br>
+            {% endfor %}
+            <br><br><br>
+        </div>
+        <div style='background-color: white; bottom: 0px; padding: 15px 100px 15px 0px; position: fixed; text-align:right; width: 100%;'>
+            <a href="{% url 'trash' %}">ごみ箱</a>
+            |
+            <a href="{% url 'logout' %}">ログアウト</a>
+        </div>
+    </div>
+{% endblock %}

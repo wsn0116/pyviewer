@@ -1,0 +1,24 @@
+{% extends "viewer/layouts/layout.html" %}
+{% block title_block %}
+Trash
+{% endblock %}
+{% block body_block %}
+    {% load static %}
+    <div>
+        <div style='background-color: white; margin: 0px; padding: 15px 0 15px 0; position: fixed; width: 100%;'>
+            <h2>ごみ箱</h2>
+        </div>
+        <br><br><br>
+        <div>
+            {% for file in files %}
+                <form action="{% url 'remove_image' %}" method='post' style='margin: 15px;'>
+                    <img src="{% static 'trashes/'|add:file %}"><br>{{ file }}
+                    {% csrf_token %}
+                    <input type='hidden' name='date' value=''>
+                    <input type='hidden' name='file' value='{{ file }}'>
+                    <input type='submit' value='delete' class='btn btn-danger' style='margin: 10px;'>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

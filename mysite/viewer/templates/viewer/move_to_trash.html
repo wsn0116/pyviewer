@@ -1,0 +1,20 @@
+{% extends "viewer/layouts/layout.html" %}
+{% block title_block %}
+Move to trash
+{% endblock %}
+{% block body_block %}
+    {% load static %}
+    <div>
+        削除に失敗しました。<br>
+        {% if is_already_exists == True %}
+            ごみ箱に既に存在しているファイルにつき移動できません。ごみ箱のファイルを削除しますか？<br>
+            <form action="{% url 'remove_image' %}" method='post' style='margin: 15px;'>
+                <img src="{% static 'trashes/'|add:file %}"><br>{{ file }}
+                {% csrf_token %}
+                <input type='hidden' name='date' value='{{ date }}'>
+                <input type='hidden' name='file' value='{{ file }}'>
+                <input type='submit' value='delete' class='btn btn-danger' style='margin: 10px;'>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
